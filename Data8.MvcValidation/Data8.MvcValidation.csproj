@@ -156,7 +156,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="readme.txt" />
+    <None Include="readme.txt" />
     <None Include="Web References\TelFormattingWS\telephoneformatting.disco" />
     <None Include="Web References\TelValidationWS\internationaltelephonevalidation.disco" />
     <None Include="Web References\EmailValidationWS\emailvalidation.disco" />
