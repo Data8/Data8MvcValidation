@@ -115,10 +115,10 @@ namespace Data8.MvcValidation
             if (!String.IsNullOrEmpty(DefaultCountryProperty))
             {
                 var property = validationContext.ObjectType.GetProperty(DefaultCountryProperty);
-                country = (string)property?.GetValue(validationContext.ObjectInstance) ?? country;
+                country = (string)property?.GetValue(validationContext.ObjectInstance, null) ?? country;
             }
 
-            var proxy = new InternationalTelephoneValidationSoapClient();
+            var proxy = new InternationalTelephoneValidation();
             var options = new[]
             {
                 new Option { Name = "UseMobileValidation", Value = UseMobileValidation.ToString() },

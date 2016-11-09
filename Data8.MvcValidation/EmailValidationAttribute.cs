@@ -79,7 +79,7 @@ namespace Data8.MvcValidation
             var username = ConfigurationManager.AppSettings["Data8Username"];
             var password = ConfigurationManager.AppSettings["Data8Password"];
 
-            var proxy = new EmailValidationSoapClient();
+            var proxy = new EmailValidation();
             var outcome = proxy.IsValid(username, password, value.ToString(), Level, null);
 
             if (outcome.Status.Success == false)

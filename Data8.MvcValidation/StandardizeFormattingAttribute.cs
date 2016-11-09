@@ -77,7 +77,7 @@ namespace Data8.MvcValidation
                         case DataType.PhoneNumber:
                             {
                                 var country = (string)metadata.Properties.FirstOrDefault(p => p.DataTypeName == "Country")?.Model ?? DefaultCountry;
-                                var proxy = new TelephoneFormattingSoapClient();
+                                var proxy = new TelephoneFormatting();
                                 var result = proxy.FormatTelephoneNumber(
                                     ConfigurationManager.AppSettings["Data8Username"],
                                     ConfigurationManager.AppSettings["Data8Password"],
@@ -111,7 +111,7 @@ namespace Data8.MvcValidation
 
                     if (formattedValue != str)
                     {
-                        prop.SetValue(parameter.Value, formattedValue);
+                        prop.SetValue(parameter.Value, formattedValue, null);
                         ((Controller)filterContext.Controller).ModelState[property.PropertyName].Value = new ValueProviderResult(formattedValue, (string)formattedValue, CultureInfo.CurrentCulture);
                     }
                 }

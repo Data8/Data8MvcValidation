@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Data8.MvcValidation</RootNamespace>
     <AssemblyName>Data8.MvcValidation</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -38,6 +39,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -52,6 +54,7 @@
       <HintPath>packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
       <Private>True</Private>
@@ -73,6 +76,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="StandardizeFormattingAttribute.cs" />
     <Compile Include="TelephoneValidationAttribute.cs" />
     <Compile Include="EmailValidationAttribute.cs" />
@@ -82,20 +90,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Service References\EmailValidationWS\Reference.cs">
+    <Compile Include="Web References\EmailValidationWS\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
+      <DependentUpon>Reference.map</DependentUpon>
     </Compile>
-    <Compile Include="Service References\TelFormattingWS\Reference.cs">
+    <Compile Include="Web References\TelFormattingWS\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
+      <DependentUpon>Reference.map</DependentUpon>
     </Compile>
-    <Compile Include="Service References\TelValidationWS\Reference.cs">
+    <Compile Include="Web References\TelValidationWS\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
+      <DependentUpon>Reference.map</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -106,75 +114,38 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
-    <None Include="Service References\EmailValidationWS\Data8.MvcValidation.EmailValidationWS.EmailCleanseOutput.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Service References\EmailValidationWS\Data8.MvcValidation.EmailValidationWS.EmailCodeVerificationOutput.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
+    <None Include="Web References\EmailValidationWS\EmailCleanseOutput.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Service References\EmailValidationWS\Data8.MvcValidation.EmailValidationWS.EmailValidationOutput.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
+    <None Include="Web References\EmailValidationWS\EmailCodeVerificationOutput.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Service References\EmailValidationWS\emailvalidation.wsdl" />
-    <None Include="Service References\TelFormattingWS\Data8.MvcValidation.TelFormattingWS.TelephoneFormattingOutput.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
+    <None Include="Web References\EmailValidationWS\emailvalidation.wsdl" />
+    <None Include="Web References\EmailValidationWS\EmailValidationOutput.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Service References\TelFormattingWS\telephoneformatting.wsdl" />
-    <None Include="Service References\TelValidationWS\Data8.MvcValidation.TelValidationWS.InternationalTelephoneValidationOutput.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\TelValidationWS\internationaltelephonevalidation.wsdl" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Service References\EmailValidationWS\" />
-    <WCFMetadataStorage Include="Service References\TelFormattingWS\" />
-    <WCFMetadataStorage Include="Service References\TelValidationWS\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\EmailValidationWS\emailvalidation.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\EmailValidationWS\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\EmailValidationWS\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\EmailValidationWS\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
+    <None Include="Web References\EmailValidationWS\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\TelValidationWS\internationaltelephonevalidation.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\TelValidationWS\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\TelValidationWS\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\TelValidationWS\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
+    <None Include="Web References\TelFormattingWS\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\TelFormattingWS\telephoneformatting.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\TelFormattingWS\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\TelFormattingWS\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\TelFormattingWS\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
+    <None Include="Web References\TelFormattingWS\telephoneformatting.wsdl" />
+    <None Include="Web References\TelFormattingWS\TelephoneFormattingOutput.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\TelValidationWS\internationaltelephonevalidation.wsdl" />
+    <None Include="Web References\TelValidationWS\InternationalTelephoneValidationOutput.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\TelValidationWS\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
   </ItemGroup>
@@ -186,6 +157,47 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="readme.txt" />
+    <None Include="Web References\TelFormattingWS\telephoneformatting.disco" />
+    <None Include="Web References\TelValidationWS\internationaltelephonevalidation.disco" />
+    <None Include="Web References\EmailValidationWS\emailvalidation.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="https://webservices.data-8.co.uk/emailvalidation.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\EmailValidationWS\</RelPath>
+      <UpdateFromURL>https://webservices.data-8.co.uk/emailvalidation.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Data8_MvcValidation_EmailValidationWS_EmailValidation</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="https://webservices.data-8.co.uk/internationaltelephonevalidation.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\TelValidationWS\</RelPath>
+      <UpdateFromURL>https://webservices.data-8.co.uk/internationaltelephonevalidation.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Data8_MvcValidation_TelValidationWS_InternationalTelephoneValidation</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="https://webservices.data-8.co.uk/telephoneformatting.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\TelFormattingWS\</RelPath>
+      <UpdateFromURL>https://webservices.data-8.co.uk/telephoneformatting.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Data8_MvcValidation_TelFormattingWS_TelephoneFormatting</CachedSettingsPropName>
+    </WebReferenceUrl>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -4,7 +4,7 @@
     <id>Data8.MvcValidation</id>
     <title>Data8.MvcValidation</title>
     <projectUrl>https://github.com/Data8/Data8MvcValidation</projectUrl>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <authors>Data8</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <summary>Data8 Validation attributes for ASP.NET MVC</summary>
@@ -18,6 +18,5 @@
   </metadata>
   <files>
     <file src="readme.txt" target="" />
-    <file src="bin\$configuration$\Data8.MvcValidation.dll" target="lib\net452\Data8.MvcValidation.dll" />
   </files>
 </package>
