@@ -3,6 +3,14 @@
 Apply Data8's advanced email and telephone number validation services to your ASP.NET MVC models with a simple attribute.
 Ensure consistent formatting of common data types.
 
+## NuGet
+
+This package is available on [NuGet](https://www.nuget.org/packages/Data8.MvcValidation):
+
+```powershell
+Install-Package Data8.MvcValidation
+```
+
 ## Prerequisites
 
 This package makes use of the Data8 Validate suite of web services, and as such you must have a Data8 account with credits
