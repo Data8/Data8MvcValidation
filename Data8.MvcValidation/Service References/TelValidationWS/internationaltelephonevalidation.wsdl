@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.data-8.co.uk/integr8" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://www.data-8.co.uk/integr8" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.data-8.co.uk/integr8">
+      <s:element name="IsValidSimple">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="telephoneNumber" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="defaultCountry" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="IsValidSimpleResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="IsValidSimpleResult" type="tns:InternationalTelephoneValidationOutput" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="InternationalTelephoneValidationOutput">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Status" type="tns:Status" />
+          <s:element minOccurs="0" maxOccurs="1" name="Result" type="tns:TelephoneNumberDetails" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Status">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Success" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="ErrorMessage" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CreditsRemaining" type="s:float" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="TelephoneNumberDetails">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="TelephoneNumber" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ValidationResult" type="tns:ValidationResult" />
+          <s:element minOccurs="1" maxOccurs="1" name="ValidationLevel" type="tns:ValidationLevel" />
+          <s:element minOccurs="1" maxOccurs="1" name="NumberType" type="tns:NumberType" />
+          <s:element minOccurs="0" maxOccurs="1" name="Location" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Provider" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CountryCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CountryName" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="ValidationResult">
+        <s:restriction base="s:string">
+          <s:enumeration value="Valid" />
+          <s:enumeration value="Invalid" />
+          <s:enumeration value="NoCoverage" />
+          <s:enumeration value="Unavailable" />
+        </s:restriction>
+      </s:simpleType>
+      <s:simpleType name="ValidationLevel">
+        <s:restriction base="s:string">
+          <s:enumeration value="None" />
+          <s:enumeration value="STDCode" />
+          <s:enumeration value="Exchange" />
+          <s:enumeration value="FullNumber" />
+        </s:restriction>
+      </s:simpleType>
+      <s:simpleType name="NumberType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Unknown" />
+          <s:enumeration value="Landline" />
+          <s:enumeration value="Mobile" />
+          <s:enumeration value="NonGeographic" />
+          <s:enumeration value="Special" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="IsValid">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="telephoneNumber" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="defaultCountry" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="options" type="tns:ArrayOfOption" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfOption">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Option" nillable="true" type="tns:Option" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Option">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Value" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="IsValidResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="IsValidResult" type="tns:InternationalTelephoneValidationOutput" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="InternationalTelephoneValidationOutput" nillable="true" type="tns:InternationalTelephoneValidationOutput" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="IsValidSimpleSoapIn">
+    <wsdl:part name="parameters" element="tns:IsValidSimple" />
+  </wsdl:message>
+  <wsdl:message name="IsValidSimpleSoapOut">
+    <wsdl:part name="parameters" element="tns:IsValidSimpleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IsValidSoapIn">
+    <wsdl:part name="parameters" element="tns:IsValid" />
+  </wsdl:message>
+  <wsdl:message name="IsValidSoapOut">
+    <wsdl:part name="parameters" element="tns:IsValidResponse" />
+  </wsdl:message>
+  <wsdl:message name="IsValidSimpleHttpGetIn">
+    <wsdl:part name="username" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+    <wsdl:part name="telephoneNumber" type="s:string" />
+    <wsdl:part name="defaultCountry" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="IsValidSimpleHttpGetOut">
+    <wsdl:part name="Body" element="tns:InternationalTelephoneValidationOutput" />
+  </wsdl:message>
+  <wsdl:message name="IsValidSimpleHttpPostIn">
+    <wsdl:part name="username" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+    <wsdl:part name="telephoneNumber" type="s:string" />
+    <wsdl:part name="defaultCountry" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="IsValidSimpleHttpPostOut">
+    <wsdl:part name="Body" element="tns:InternationalTelephoneValidationOutput" />
+  </wsdl:message>
+  <wsdl:portType name="InternationalTelephoneValidationSoap">
+    <wsdl:operation name="IsValidSimple">
+      <wsdl:input message="tns:IsValidSimpleSoapIn" />
+      <wsdl:output message="tns:IsValidSimpleSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="IsValid">
+      <wsdl:input message="tns:IsValidSoapIn" />
+      <wsdl:output message="tns:IsValidSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="InternationalTelephoneValidationHttpGet">
+    <wsdl:operation name="IsValidSimple">
+      <wsdl:input message="tns:IsValidSimpleHttpGetIn" />
+      <wsdl:output message="tns:IsValidSimpleHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="InternationalTelephoneValidationHttpPost">
+    <wsdl:operation name="IsValidSimple">
+      <wsdl:input message="tns:IsValidSimpleHttpPostIn" />
+      <wsdl:output message="tns:IsValidSimpleHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="InternationalTelephoneValidationSoap" type="tns:InternationalTelephoneValidationSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="IsValidSimple">
+      <soap:operation soapAction="http://www.data-8.co.uk/integr8/IsValidSimple" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsValid">
+      <soap:operation soapAction="http://www.data-8.co.uk/integr8/IsValid" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="InternationalTelephoneValidationSoap12" type="tns:InternationalTelephoneValidationSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="IsValidSimple">
+      <soap12:operation soapAction="http://www.data-8.co.uk/integr8/IsValidSimple" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsValid">
+      <soap12:operation soapAction="http://www.data-8.co.uk/integr8/IsValid" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="InternationalTelephoneValidationHttpGet" type="tns:InternationalTelephoneValidationHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="IsValidSimple">
+      <http:operation location="/IsValidSimple" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="InternationalTelephoneValidationHttpPost" type="tns:InternationalTelephoneValidationHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="IsValidSimple">
+      <http:operation location="/IsValidSimple" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="InternationalTelephoneValidation">
+    <wsdl:port name="InternationalTelephoneValidationSoap" binding="tns:InternationalTelephoneValidationSoap">
+      <soap:address location="https://webservices.data-8.co.uk/internationaltelephonevalidation.asmx" />
+    </wsdl:port>
+    <wsdl:port name="InternationalTelephoneValidationSoap12" binding="tns:InternationalTelephoneValidationSoap12">
+      <soap12:address location="https://webservices.data-8.co.uk/internationaltelephonevalidation.asmx" />
+    </wsdl:port>
+    <wsdl:port name="InternationalTelephoneValidationHttpGet" binding="tns:InternationalTelephoneValidationHttpGet">
+      <http:address location="https://webservices.data-8.co.uk/internationaltelephonevalidation.asmx" />
+    </wsdl:port>
+    <wsdl:port name="InternationalTelephoneValidationHttpPost" binding="tns:InternationalTelephoneValidationHttpPost">
+      <http:address location="https://webservices.data-8.co.uk/internationaltelephonevalidation.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

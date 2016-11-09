@@ -1,0 +1,691 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.data-8.co.uk/integr8" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://www.data-8.co.uk/integr8" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.data-8.co.uk/integr8">
+      <s:element name="IsValidSimple">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="level" type="tns:EmailValidationLevel" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:simpleType name="EmailValidationLevel">
+        <s:restriction base="s:string">
+          <s:enumeration value="Syntax" />
+          <s:enumeration value="MX" />
+          <s:enumeration value="Server" />
+          <s:enumeration value="Address" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="IsValidSimpleResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="IsValidSimpleResult" type="tns:EmailValidationOutput" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="EmailValidationOutput">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Status" type="tns:Status" />
+          <s:element minOccurs="1" maxOccurs="1" name="Result" type="tns:EmailValidationResult" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Status">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Success" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="ErrorMessage" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CreditsRemaining" type="s:float" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="EmailValidationResult">
+        <s:restriction base="s:string">
+          <s:enumeration value="Blank" />
+          <s:enumeration value="Invalid" />
+          <s:enumeration value="Inconclusive" />
+          <s:enumeration value="GreyListed" />
+          <s:enumeration value="CatchAll" />
+          <s:enumeration value="Valid" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="IsValid">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="level" type="tns:EmailValidationLevel" />
+            <s:element minOccurs="0" maxOccurs="1" name="options" type="tns:ArrayOfOption" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfOption">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Option" nillable="true" type="tns:Option" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Option">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Value" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="IsValidResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="IsValidResult" type="tns:EmailValidationOutput" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="IsValidMultiple">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="requests" type="tns:ArrayOfEmailValidationRequest" />
+            <s:element minOccurs="0" maxOccurs="1" name="options" type="tns:ArrayOfOption" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfEmailValidationRequest">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="EmailValidationRequest" nillable="true" type="tns:EmailValidationRequest" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="EmailValidationRequest">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Level" type="tns:EmailValidationLevel" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="IsValidMultipleResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="IsValidMultipleResult" type="tns:ArrayOfEmailValidationOutput" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfEmailValidationOutput">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="EmailValidationOutput" nillable="true" type="tns:EmailValidationOutput" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="CleanseSimple">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="level" type="tns:EmailValidationLevel" />
+            <s:element minOccurs="0" maxOccurs="1" name="title" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="forename" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="middleName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="surname" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="company" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="address" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CleanseSimpleResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CleanseSimpleResult" type="tns:EmailCleanseOutput" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="EmailCleanseOutput">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Status" type="tns:Status" />
+          <s:element minOccurs="1" maxOccurs="1" name="Result" type="tns:EmailValidationResult" />
+          <s:element minOccurs="1" maxOccurs="1" name="OriginalValid" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="EmailType" type="tns:EmailTypeResult" />
+          <s:element minOccurs="0" maxOccurs="1" name="SuggestedEmailAddress" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Comment" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Salutation" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="StructureUsed" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ParsedName" type="tns:Name" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="EmailTypeResult">
+        <s:restriction base="s:string">
+          <s:enumeration value="Personal" />
+          <s:enumeration value="ISP" />
+          <s:enumeration value="Free" />
+          <s:enumeration value="Generic" />
+          <s:enumeration value="Disposable" />
+          <s:enumeration value="Blank" />
+          <s:enumeration value="SpamTrap" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="Name">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Forename" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="MiddleName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Surname" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="Cleanse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="level" type="tns:EmailValidationLevel" />
+            <s:element minOccurs="0" maxOccurs="1" name="record" type="tns:BusinessInputRecord" />
+            <s:element minOccurs="0" maxOccurs="1" name="options" type="tns:ArrayOfOption" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="BusinessInputRecord">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:InputRecord">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="CompanyName" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="InputRecord">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="tns:Name" />
+          <s:element minOccurs="1" maxOccurs="1" name="Address" type="tns:Address" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Address">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Lines" type="tns:ArrayOfString" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="CleanseResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CleanseResult" type="tns:EmailCleanseOutput" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CleanseMultiple">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="requests" type="tns:ArrayOfEmailCleanseRequest" />
+            <s:element minOccurs="0" maxOccurs="1" name="options" type="tns:ArrayOfOption" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfEmailCleanseRequest">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="EmailCleanseRequest" nillable="true" type="tns:EmailCleanseRequest" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="EmailCleanseRequest">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Level" type="tns:EmailValidationLevel" />
+          <s:element minOccurs="0" maxOccurs="1" name="Record" type="tns:BusinessInputRecord" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="CleanseMultipleResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CleanseMultipleResult" type="tns:ArrayOfEmailCleanseOutput" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfEmailCleanseOutput">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="EmailCleanseOutput" nillable="true" type="tns:EmailCleanseOutput" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="CodeVerifySimple">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CodeVerifySimpleResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CodeVerifySimpleResult" type="tns:EmailCodeVerificationOutput" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="EmailCodeVerificationOutput">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Status" type="tns:Status" />
+          <s:element minOccurs="1" maxOccurs="1" name="Result" type="tns:EmailValidationResult" />
+          <s:element minOccurs="0" maxOccurs="1" name="Code" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="CodeVerify">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="options" type="tns:ArrayOfOption" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CodeVerifyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CodeVerifyResult" type="tns:EmailCodeVerificationOutput" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="EmailValidationOutput" nillable="true" type="tns:EmailValidationOutput" />
+      <s:element name="EmailCleanseOutput" nillable="true" type="tns:EmailCleanseOutput" />
+      <s:element name="EmailCodeVerificationOutput" nillable="true" type="tns:EmailCodeVerificationOutput" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="IsValidSimpleSoapIn">
+    <wsdl:part name="parameters" element="tns:IsValidSimple" />
+  </wsdl:message>
+  <wsdl:message name="IsValidSimpleSoapOut">
+    <wsdl:part name="parameters" element="tns:IsValidSimpleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IsValidSoapIn">
+    <wsdl:part name="parameters" element="tns:IsValid" />
+  </wsdl:message>
+  <wsdl:message name="IsValidSoapOut">
+    <wsdl:part name="parameters" element="tns:IsValidResponse" />
+  </wsdl:message>
+  <wsdl:message name="IsValidMultipleSoapIn">
+    <wsdl:part name="parameters" element="tns:IsValidMultiple" />
+  </wsdl:message>
+  <wsdl:message name="IsValidMultipleSoapOut">
+    <wsdl:part name="parameters" element="tns:IsValidMultipleResponse" />
+  </wsdl:message>
+  <wsdl:message name="CleanseSimpleSoapIn">
+    <wsdl:part name="parameters" element="tns:CleanseSimple" />
+  </wsdl:message>
+  <wsdl:message name="CleanseSimpleSoapOut">
+    <wsdl:part name="parameters" element="tns:CleanseSimpleResponse" />
+  </wsdl:message>
+  <wsdl:message name="CleanseSoapIn">
+    <wsdl:part name="parameters" element="tns:Cleanse" />
+  </wsdl:message>
+  <wsdl:message name="CleanseSoapOut">
+    <wsdl:part name="parameters" element="tns:CleanseResponse" />
+  </wsdl:message>
+  <wsdl:message name="CleanseMultipleSoapIn">
+    <wsdl:part name="parameters" element="tns:CleanseMultiple" />
+  </wsdl:message>
+  <wsdl:message name="CleanseMultipleSoapOut">
+    <wsdl:part name="parameters" element="tns:CleanseMultipleResponse" />
+  </wsdl:message>
+  <wsdl:message name="CodeVerifySimpleSoapIn">
+    <wsdl:part name="parameters" element="tns:CodeVerifySimple" />
+  </wsdl:message>
+  <wsdl:message name="CodeVerifySimpleSoapOut">
+    <wsdl:part name="parameters" element="tns:CodeVerifySimpleResponse" />
+  </wsdl:message>
+  <wsdl:message name="CodeVerifySoapIn">
+    <wsdl:part name="parameters" element="tns:CodeVerify" />
+  </wsdl:message>
+  <wsdl:message name="CodeVerifySoapOut">
+    <wsdl:part name="parameters" element="tns:CodeVerifyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IsValidSimpleHttpGetIn">
+    <wsdl:part name="username" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+    <wsdl:part name="email" type="s:string" />
+    <wsdl:part name="level" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="IsValidSimpleHttpGetOut">
+    <wsdl:part name="Body" element="tns:EmailValidationOutput" />
+  </wsdl:message>
+  <wsdl:message name="CleanseSimpleHttpGetIn">
+    <wsdl:part name="username" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+    <wsdl:part name="email" type="s:string" />
+    <wsdl:part name="level" type="s:string" />
+    <wsdl:part name="title" type="s:string" />
+    <wsdl:part name="forename" type="s:string" />
+    <wsdl:part name="middleName" type="s:string" />
+    <wsdl:part name="surname" type="s:string" />
+    <wsdl:part name="company" type="s:string" />
+    <wsdl:part name="address" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CleanseSimpleHttpGetOut">
+    <wsdl:part name="Body" element="tns:EmailCleanseOutput" />
+  </wsdl:message>
+  <wsdl:message name="CodeVerifySimpleHttpGetIn">
+    <wsdl:part name="username" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+    <wsdl:part name="email" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CodeVerifySimpleHttpGetOut">
+    <wsdl:part name="Body" element="tns:EmailCodeVerificationOutput" />
+  </wsdl:message>
+  <wsdl:message name="IsValidSimpleHttpPostIn">
+    <wsdl:part name="username" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+    <wsdl:part name="email" type="s:string" />
+    <wsdl:part name="level" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="IsValidSimpleHttpPostOut">
+    <wsdl:part name="Body" element="tns:EmailValidationOutput" />
+  </wsdl:message>
+  <wsdl:message name="CleanseSimpleHttpPostIn">
+    <wsdl:part name="username" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+    <wsdl:part name="email" type="s:string" />
+    <wsdl:part name="level" type="s:string" />
+    <wsdl:part name="title" type="s:string" />
+    <wsdl:part name="forename" type="s:string" />
+    <wsdl:part name="middleName" type="s:string" />
+    <wsdl:part name="surname" type="s:string" />
+    <wsdl:part name="company" type="s:string" />
+    <wsdl:part name="address" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CleanseSimpleHttpPostOut">
+    <wsdl:part name="Body" element="tns:EmailCleanseOutput" />
+  </wsdl:message>
+  <wsdl:message name="CodeVerifySimpleHttpPostIn">
+    <wsdl:part name="username" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+    <wsdl:part name="email" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CodeVerifySimpleHttpPostOut">
+    <wsdl:part name="Body" element="tns:EmailCodeVerificationOutput" />
+  </wsdl:message>
+  <wsdl:portType name="EmailValidationSoap">
+    <wsdl:operation name="IsValidSimple">
+      <wsdl:input message="tns:IsValidSimpleSoapIn" />
+      <wsdl:output message="tns:IsValidSimpleSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="IsValid">
+      <wsdl:input message="tns:IsValidSoapIn" />
+      <wsdl:output message="tns:IsValidSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="IsValidMultiple">
+      <wsdl:input message="tns:IsValidMultipleSoapIn" />
+      <wsdl:output message="tns:IsValidMultipleSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CleanseSimple">
+      <wsdl:input message="tns:CleanseSimpleSoapIn" />
+      <wsdl:output message="tns:CleanseSimpleSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Cleanse">
+      <wsdl:input message="tns:CleanseSoapIn" />
+      <wsdl:output message="tns:CleanseSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CleanseMultiple">
+      <wsdl:input message="tns:CleanseMultipleSoapIn" />
+      <wsdl:output message="tns:CleanseMultipleSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CodeVerifySimple">
+      <wsdl:input message="tns:CodeVerifySimpleSoapIn" />
+      <wsdl:output message="tns:CodeVerifySimpleSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CodeVerify">
+      <wsdl:input message="tns:CodeVerifySoapIn" />
+      <wsdl:output message="tns:CodeVerifySoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="EmailValidationHttpGet">
+    <wsdl:operation name="IsValidSimple">
+      <wsdl:input message="tns:IsValidSimpleHttpGetIn" />
+      <wsdl:output message="tns:IsValidSimpleHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CleanseSimple">
+      <wsdl:input message="tns:CleanseSimpleHttpGetIn" />
+      <wsdl:output message="tns:CleanseSimpleHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CodeVerifySimple">
+      <wsdl:input message="tns:CodeVerifySimpleHttpGetIn" />
+      <wsdl:output message="tns:CodeVerifySimpleHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="EmailValidationHttpPost">
+    <wsdl:operation name="IsValidSimple">
+      <wsdl:input message="tns:IsValidSimpleHttpPostIn" />
+      <wsdl:output message="tns:IsValidSimpleHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CleanseSimple">
+      <wsdl:input message="tns:CleanseSimpleHttpPostIn" />
+      <wsdl:output message="tns:CleanseSimpleHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CodeVerifySimple">
+      <wsdl:input message="tns:CodeVerifySimpleHttpPostIn" />
+      <wsdl:output message="tns:CodeVerifySimpleHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="EmailValidationSoap" type="tns:EmailValidationSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="IsValidSimple">
+      <soap:operation soapAction="http://www.data-8.co.uk/integr8/IsValidSimple" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsValid">
+      <soap:operation soapAction="http://www.data-8.co.uk/integr8/IsValid" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsValidMultiple">
+      <soap:operation soapAction="http://www.data-8.co.uk/integr8/IsValidMultiple" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CleanseSimple">
+      <soap:operation soapAction="http://www.data-8.co.uk/integr8/CleanseSimple" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Cleanse">
+      <soap:operation soapAction="http://www.data-8.co.uk/integr8/Cleanse" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CleanseMultiple">
+      <soap:operation soapAction="http://www.data-8.co.uk/integr8/CleanseMultiple" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CodeVerifySimple">
+      <soap:operation soapAction="http://www.data-8.co.uk/integr8/CodeVerifySimple" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CodeVerify">
+      <soap:operation soapAction="http://www.data-8.co.uk/integr8/CodeVerify" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="EmailValidationSoap12" type="tns:EmailValidationSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="IsValidSimple">
+      <soap12:operation soapAction="http://www.data-8.co.uk/integr8/IsValidSimple" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsValid">
+      <soap12:operation soapAction="http://www.data-8.co.uk/integr8/IsValid" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsValidMultiple">
+      <soap12:operation soapAction="http://www.data-8.co.uk/integr8/IsValidMultiple" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CleanseSimple">
+      <soap12:operation soapAction="http://www.data-8.co.uk/integr8/CleanseSimple" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Cleanse">
+      <soap12:operation soapAction="http://www.data-8.co.uk/integr8/Cleanse" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CleanseMultiple">
+      <soap12:operation soapAction="http://www.data-8.co.uk/integr8/CleanseMultiple" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CodeVerifySimple">
+      <soap12:operation soapAction="http://www.data-8.co.uk/integr8/CodeVerifySimple" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CodeVerify">
+      <soap12:operation soapAction="http://www.data-8.co.uk/integr8/CodeVerify" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="EmailValidationHttpGet" type="tns:EmailValidationHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="IsValidSimple">
+      <http:operation location="/IsValidSimple" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CleanseSimple">
+      <http:operation location="/CleanseSimple" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CodeVerifySimple">
+      <http:operation location="/CodeVerifySimple" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="EmailValidationHttpPost" type="tns:EmailValidationHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="IsValidSimple">
+      <http:operation location="/IsValidSimple" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CleanseSimple">
+      <http:operation location="/CleanseSimple" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CodeVerifySimple">
+      <http:operation location="/CodeVerifySimple" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="EmailValidation">
+    <wsdl:port name="EmailValidationSoap" binding="tns:EmailValidationSoap">
+      <soap:address location="https://webservices.data-8.co.uk/emailvalidation.asmx" />
+    </wsdl:port>
+    <wsdl:port name="EmailValidationSoap12" binding="tns:EmailValidationSoap12">
+      <soap12:address location="https://webservices.data-8.co.uk/emailvalidation.asmx" />
+    </wsdl:port>
+    <wsdl:port name="EmailValidationHttpGet" binding="tns:EmailValidationHttpGet">
+      <http:address location="https://webservices.data-8.co.uk/emailvalidation.asmx" />
+    </wsdl:port>
+    <wsdl:port name="EmailValidationHttpPost" binding="tns:EmailValidationHttpPost">
+      <http:address location="https://webservices.data-8.co.uk/emailvalidation.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

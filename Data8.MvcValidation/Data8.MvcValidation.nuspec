@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/01/nuspec.xsd">
+  <metadata>
+    <id>Data8.MvcValidation</id>
+    <version>1.0.0</version>
+    <authors>Data8</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>Data8 Validation attributes for ASP.NET MVC</summary>
+    <description>Apply Data8 advanced email address and telephone number validation and format standardization for common data types in ASP.NET MVC</description>
+    <references>
+      <group targetFramework=".NETFramework4.5.2">
+        <reference file="Data8.MvcValidation.dll" />
+      </group>
+    </references>
+  </metadata>
+  <files>
+    <file src="readme.txt" target="" />
+    <file src="bin\$configuration$\Data8.MvcValidation.dll" target="lib\net452\Data8.MvcValidation.dll" />
+  </files>
+</package>
