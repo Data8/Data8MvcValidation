@@ -109,6 +109,12 @@ namespace Data8.MvcValidation
 
             var username = ConfigurationManager.AppSettings["Data8Username"];
             var password = ConfigurationManager.AppSettings["Data8Password"];
+            var apikey = ConfigurationManager.AppSettings["Data8APIKey"];
+            if (!String.IsNullOrEmpty(apikey))
+            {
+                username = "apikey-" + apikey;
+                password = "";
+            }
 
             var country = DefaultCountry;
 
@@ -119,11 +125,13 @@ namespace Data8.MvcValidation
             }
 
             var proxy = new InternationalTelephoneValidation();
+
             var options = new[]
             {
                 new Option { Name = "UseMobileValidation", Value = UseMobileValidation.ToString() },
                 new Option { Name = "UseLineValidation", Value = UseLandlineValidation.ToString() },
                 new Option { Name = "TreatUnavailableMobileAsInvalid", Value = TreatUnavailableMobileAsInvalid.ToString() },
+                new Option() { Name = "ApplicationName", Value = "MVC" }
             };
 
             var outcome = proxy.IsValid(username, password, str, country, options);

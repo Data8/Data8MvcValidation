@@ -78,9 +78,20 @@ namespace Data8.MvcValidation
 
             var username = ConfigurationManager.AppSettings["Data8Username"];
             var password = ConfigurationManager.AppSettings["Data8Password"];
+            var apikey = ConfigurationManager.AppSettings["Data8APIKey"];
+            if (!String.IsNullOrEmpty(apikey))
+            {
+                username = "apikey-" + apikey;
+                password = "";
+            }
+
+            var options = new[]
+            {
+                new Option() { Name = "ApplicationName", Value = "MVC" }
+            };
 
             var proxy = new EmailValidation();
-            var outcome = proxy.IsValid(username, password, value.ToString(), Level, null);
+            var outcome = proxy.IsValid(username, password, value.ToString(), Level, options);
 
             if (outcome.Status.Success == false)
                 return true;
