@@ -2,8 +2,8 @@
 using System.ComponentModel.DataAnnotations;
 using System.Configuration;
 using System.Net.Http;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
+using static Data8.MvcValidation.ValidationResponses;
 using ValidationResult = System.ComponentModel.DataAnnotations.ValidationResult;
 
 namespace Data8.MvcValidation
@@ -46,24 +46,6 @@ namespace Data8.MvcValidation
             if (String.IsNullOrEmpty(DefaultCountry))
                 DefaultCountry = "GB";
         }
-
-        /// <summary>
-        /// Indicates whether to subject telephone numbers identified as mobiles to more stringent validation
-        /// using the mobile network.
-        /// </summary>
-        /// <value>
-        /// <c>true</c> to use the enhanced mobile validation service for mobile numbers, or <c>false</c> otherwise.
-        /// </value>
-        public bool UseMobileValidation { get; set; }
-
-        /// <summary>
-        /// Indicates whether to subject telephone numbers identified as UK landlines to more stringent validation
-        /// using the telephone network.
-        /// </summary>
-        /// <value>
-        /// <c>true</c> to use the enhanced landline validation service for UK landline numbers, or <c>false</c> otherwise.
-        /// </value>
-        public bool UseLandlineValidation { get; set; }
 
         /// <summary>
         /// The country code to assume when validating telephone numbers supplied without an explicit country code.
@@ -144,7 +126,7 @@ namespace Data8.MvcValidation
                 }
             };
 
-            ValidationResponses.PhoneValidationResponse outcome = PerformValidation(JsonConvert.SerializeObject(data));
+            PhoneValidationResponse outcome = PerformValidation(JsonConvert.SerializeObject(data));
             if (outcome.Status.Success == false)
                 return ValidationResult.Success;
 
@@ -154,12 +136,12 @@ namespace Data8.MvcValidation
             return new ValidationResult(FormatErrorMessage(validationContext.DisplayName));
         }
 
-        private ValidationResponses.PhoneValidationResponse PerformValidation(string data) {
+        private PhoneValidationResponse PerformValidation(string data) {
             var url = "https://webservices.data-8.co.uk/PhoneValidation/IsValid.json";
             using (var client = new HttpClient())
             {
                 var response = client.PostAsync(url, new StringContent(data, System.Text.Encoding.UTF8, "application/json")).Result;
-                var phoneResult = JsonConvert.DeserializeObject<ValidationResponses.PhoneValidationResponse>(response.Content.ReadAsStringAsync().Result);
+                var phoneResult = JsonConvert.DeserializeObject<PhoneValidationResponse>(response.Content.ReadAsStringAsync().Result);
                 Console.WriteLine("Data8 Validation Result: " + phoneResult.Result.ValidationResult);
                 return phoneResult;
             }

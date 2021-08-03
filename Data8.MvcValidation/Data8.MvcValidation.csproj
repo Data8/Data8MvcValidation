@@ -96,17 +96,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="ValidationResponses.cs" />
-    <Compile Include="Web References\EmailValidationWS\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.map</DependentUpon>
-    </Compile>
     <Compile Include="Web References\TelFormattingWS\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.map</DependentUpon>
-    </Compile>
-    <Compile Include="Web References\TelValidationWS\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.map</DependentUpon>
@@ -124,20 +114,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Web References\EmailValidationWS\EmailCleanseOutput.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </None>
-    <None Include="Web References\EmailValidationWS\EmailCodeVerificationOutput.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </None>
-    <None Include="Web References\EmailValidationWS\emailvalidation.wsdl" />
-    <None Include="Web References\EmailValidationWS\EmailValidationOutput.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </None>
-    <None Include="Web References\EmailValidationWS\Reference.map">
-      <Generator>MSDiscoCodeGenerator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
     <None Include="Web References\TelFormattingWS\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -145,14 +121,6 @@
     <None Include="Web References\TelFormattingWS\telephoneformatting.wsdl" />
     <None Include="Web References\TelFormattingWS\TelephoneFormattingOutput.datasource">
       <DependentUpon>Reference.map</DependentUpon>
-    </None>
-    <None Include="Web References\TelValidationWS\internationaltelephonevalidation.wsdl" />
-    <None Include="Web References\TelValidationWS\InternationalTelephoneValidationOutput.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </None>
-    <None Include="Web References\TelValidationWS\Reference.map">
-      <Generator>MSDiscoCodeGenerator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -164,35 +132,11 @@
   <ItemGroup>
     <None Include="readme.txt" />
     <None Include="Web References\TelFormattingWS\telephoneformatting.disco" />
-    <None Include="Web References\TelValidationWS\internationaltelephonevalidation.disco" />
-    <None Include="Web References\EmailValidationWS\emailvalidation.disco" />
   </ItemGroup>
   <ItemGroup>
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
-    <WebReferenceUrl Include="https://webservices.data-8.co.uk/emailvalidation.asmx">
-      <UrlBehavior>Dynamic</UrlBehavior>
-      <RelPath>Web References\EmailValidationWS\</RelPath>
-      <UpdateFromURL>https://webservices.data-8.co.uk/emailvalidation.asmx</UpdateFromURL>
-      <ServiceLocationURL>
-      </ServiceLocationURL>
-      <CachedDynamicPropName>
-      </CachedDynamicPropName>
-      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
-      <CachedSettingsPropName>Data8_MvcValidation_EmailValidationWS_EmailValidation</CachedSettingsPropName>
-    </WebReferenceUrl>
-    <WebReferenceUrl Include="https://webservices.data-8.co.uk/internationaltelephonevalidation.asmx">
-      <UrlBehavior>Dynamic</UrlBehavior>
-      <RelPath>Web References\TelValidationWS\</RelPath>
-      <UpdateFromURL>https://webservices.data-8.co.uk/internationaltelephonevalidation.asmx</UpdateFromURL>
-      <ServiceLocationURL>
-      </ServiceLocationURL>
-      <CachedDynamicPropName>
-      </CachedDynamicPropName>
-      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
-      <CachedSettingsPropName>Data8_MvcValidation_TelValidationWS_InternationalTelephoneValidation</CachedSettingsPropName>
-    </WebReferenceUrl>
     <WebReferenceUrl Include="https://webservices.data-8.co.uk/telephoneformatting.asmx">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\TelFormattingWS\</RelPath>

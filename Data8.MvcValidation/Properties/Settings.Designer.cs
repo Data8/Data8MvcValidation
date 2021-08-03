@@ -26,26 +26,6 @@ namespace Data8.MvcValidation.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://webservices.data-8.co.uk/emailvalidation.asmx")]
-        public string Data8_MvcValidation_EmailValidationWS_EmailValidation {
-            get {
-                return ((string)(this["Data8_MvcValidation_EmailValidationWS_EmailValidation"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://webservices.data-8.co.uk/internationaltelephonevalidation.asmx")]
-        public string Data8_MvcValidation_TelValidationWS_InternationalTelephoneValidation {
-            get {
-                return ((string)(this["Data8_MvcValidation_TelValidationWS_InternationalTelephoneValidation"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
         [global::System.Configuration.DefaultSettingValueAttribute("https://webservices.data-8.co.uk/telephoneformatting.asmx")]
         public string Data8_MvcValidation_TelFormattingWS_TelephoneFormatting {
             get {

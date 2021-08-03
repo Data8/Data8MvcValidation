@@ -21,6 +21,13 @@ namespace Data8.MvcValidation
             public Status Status { get; set; }
         }
 
+        public enum EmailValidationLevel { 
+            Syntax,
+            MX,
+            Server,
+            Address
+        }
+
         public class PhoneValidationResponse
         {
             public PhoneResult Result { get; set; }
