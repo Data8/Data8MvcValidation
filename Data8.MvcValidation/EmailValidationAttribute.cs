@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Configuration;
 using System.Net.Http;
 using Newtonsoft.Json;
-using static Data8.MvcValidation.ValidationResponses;
 
 namespace Data8.MvcValidation
 {
@@ -117,4 +116,19 @@ namespace Data8.MvcValidation
             }
         }
     }
+
+    public class EmailValidationResponse
+    {
+        public string Result { get; set; }
+        public Status Status { get; set; }
+    }
+
+    public enum EmailValidationLevel
+    {
+        Syntax,
+        MX,
+        Server,
+        Address
+    }
+
 }

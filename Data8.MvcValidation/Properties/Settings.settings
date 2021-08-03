@@ -1,9 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Data8.MvcValidation.Properties" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)">
   <Profiles />
-  <Settings>
-    <Setting Name="Data8_MvcValidation_TelFormattingWS_TelephoneFormatting" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)">https://webservices.data-8.co.uk/telephoneformatting.asmx</Value>
-    </Setting>
-  </Settings>
+  <Settings />
 </SettingsFile>

@@ -22,15 +22,5 @@ namespace Data8.MvcValidation.Properties {
                 return defaultInstance;
             }
         }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://webservices.data-8.co.uk/telephoneformatting.asmx")]
-        public string Data8_MvcValidation_TelFormattingWS_TelephoneFormatting {
-            get {
-                return ((string)(this["Data8_MvcValidation_TelFormattingWS_TelephoneFormatting"]));
-            }
-        }
     }
 }

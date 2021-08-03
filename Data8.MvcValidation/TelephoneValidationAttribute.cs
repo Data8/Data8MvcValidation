@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Configuration;
 using System.Net.Http;
 using Newtonsoft.Json;
-using static Data8.MvcValidation.ValidationResponses;
 using ValidationResult = System.ComponentModel.DataAnnotations.ValidationResult;
 
 namespace Data8.MvcValidation
@@ -147,4 +146,30 @@ namespace Data8.MvcValidation
             }
         }
     }
+
+    public class PhoneValidationResponse
+    {
+        public PhoneResult Result { get; set; }
+        public Status Status { get; set; }
+    }
+
+    public class Status
+    {
+        public bool Success { get; set; }
+        public string ErrorMessage { get; set; }
+        public decimal CreditsRemaining { get; set; }
+    }
+
+    public class PhoneResult
+    {
+        public string TelephoneNumber { get; set; }
+        public string ValidationResult { get; set; }
+        public string ValidationLevel { get; set; }
+        public string NumberType { get; set; }
+        public string Location { get; set; }
+        public string Provider { get; set; }
+        public string CountryCode { get; set; }
+        public string CountryName { get; set; }
+    }
+
 }
