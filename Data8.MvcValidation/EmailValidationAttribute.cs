@@ -1,7 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Configuration;
+using System.Net.Http;
+using System.Threading.Tasks;
 using Data8.MvcValidation.EmailValidationWS;
+using Newtonsoft.Json;
 
 namespace Data8.MvcValidation
 {
@@ -85,18 +88,34 @@ namespace Data8.MvcValidation
                 password = "";
             }
 
-            var options = new[]
+            var data = new
             {
-                new Option() { Name = "ApplicationName", Value = "MVC" }
+                username,
+                password,
+                email = value.ToString(),
+                level = Level,
+                options = new
+                {
+                    ApplicationName = "MVC"
+                }
             };
 
-            var proxy = new EmailValidation();
-            var outcome = proxy.IsValid(username, password, value.ToString(), Level, options);
+            ValidationResponses.EmailValidationResponse outcome = PerformValidation(JsonConvert.SerializeObject(data));
 
             if (outcome.Status.Success == false)
                 return true;
 
-            return outcome.Result != EmailValidationResult.Invalid;
+            return outcome.Result != "Invalid";
+        }
+
+        private ValidationResponses.EmailValidationResponse PerformValidation(string data)
+        {
+            var url = "https://webservices.data-8.co.uk/EmailValidation/IsValid.json";
+            using (var request = new HttpClient()) {
+                var response = request.PostAsync(url, new StringContent(data, System.Text.Encoding.UTF8, "application/json")).Result;
+                var emailResult = JsonConvert.DeserializeObject<ValidationResponses.EmailValidationResponse>(response.Content.ReadAsStringAsync().Result);
+                return emailResult;
+            }
         }
     }
 }
