@@ -1,7 +1,8 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Configuration;
-using Data8.MvcValidation.EmailValidationWS;
+using System.Net.Http;
+using Newtonsoft.Json;
 
 namespace Data8.MvcValidation
 {
@@ -78,14 +79,56 @@ namespace Data8.MvcValidation
 
             var username = ConfigurationManager.AppSettings["Data8Username"];
             var password = ConfigurationManager.AppSettings["Data8Password"];
+            var apikey = ConfigurationManager.AppSettings["Data8APIKey"];
+            if (!String.IsNullOrEmpty(apikey))
+            {
+                username = "apikey-" + apikey;
+                password = "";
+            }
 
-            var proxy = new EmailValidation();
-            var outcome = proxy.IsValid(username, password, value.ToString(), Level, null);
+            var data = new
+            {
+                username,
+                password,
+                email = value.ToString(),
+                level = Level,
+                options = new
+                {
+                    ApplicationName = "MVC"
+                }
+            };
+
+            EmailValidationResponse outcome = PerformValidation(JsonConvert.SerializeObject(data));
 
             if (outcome.Status.Success == false)
                 return true;
 
-            return outcome.Result != EmailValidationResult.Invalid;
+            return outcome.Result != "Invalid";
+        }
+
+        private EmailValidationResponse PerformValidation(string data)
+        {
+            var url = "https://webservices.data-8.co.uk/EmailValidation/IsValid.json";
+            using (var request = new HttpClient()) {
+                var response = request.PostAsync(url, new StringContent(data, System.Text.Encoding.UTF8, "application/json")).Result;
+                var emailResult = JsonConvert.DeserializeObject<EmailValidationResponse>(response.Content.ReadAsStringAsync().Result);
+                return emailResult;
+            }
         }
     }
+
+    public class EmailValidationResponse
+    {
+        public string Result { get; set; }
+        public Status Status { get; set; }
+    }
+
+    public enum EmailValidationLevel
+    {
+        Syntax,
+        MX,
+        Server,
+        Address
+    }
+
 }

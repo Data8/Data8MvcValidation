@@ -1,7 +1,8 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Configuration;
-using Data8.MvcValidation.TelValidationWS;
+using System.Net.Http;
+using Newtonsoft.Json;
 using ValidationResult = System.ComponentModel.DataAnnotations.ValidationResult;
 
 namespace Data8.MvcValidation
@@ -46,24 +47,6 @@ namespace Data8.MvcValidation
         }
 
         /// <summary>
-        /// Indicates whether to subject telephone numbers identified as mobiles to more stringent validation
-        /// using the mobile network.
-        /// </summary>
-        /// <value>
-        /// <c>true</c> to use the enhanced mobile validation service for mobile numbers, or <c>false</c> otherwise.
-        /// </value>
-        public bool UseMobileValidation { get; set; }
-
-        /// <summary>
-        /// Indicates whether to subject telephone numbers identified as UK landlines to more stringent validation
-        /// using the telephone network.
-        /// </summary>
-        /// <value>
-        /// <c>true</c> to use the enhanced landline validation service for UK landline numbers, or <c>false</c> otherwise.
-        /// </value>
-        public bool UseLandlineValidation { get; set; }
-
-        /// <summary>
         /// The country code to assume when validating telephone numbers supplied without an explicit country code.
         /// </summary>
         /// <value>
@@ -84,10 +67,17 @@ namespace Data8.MvcValidation
         /// Indicates whether unavailable mobile numbers (e.g. turned off for an extended period) should be treated as invalid numbers.
         /// </summary>
         /// <remarks>
-        /// This setting only has any effect when the <see cref="UseMobileValidation"/> property is set to <c>true</c>. By default,
-        /// unavailable mobile numbers are treated as valid.
+        /// By default, unavailable mobile numbers are treated as valid.
         /// </remarks>
         public bool TreatUnavailableMobileAsInvalid { get; set; }
+
+        /// <summary>
+        /// Indicates whether unavailable mobile numbers (e.g. turned off for an extended period) should be treated as invalid numbers.
+        /// </summary>
+        /// <remarks>
+        /// By default, telephone numbers from countries with no coverage are treated as valid.
+        /// </remarks>
+        public bool TreatNoCoverageAsInvalid { get; set; }
 
         /// <summary>
         /// Validates the supplied telephone number.
@@ -109,6 +99,12 @@ namespace Data8.MvcValidation
 
             var username = ConfigurationManager.AppSettings["Data8Username"];
             var password = ConfigurationManager.AppSettings["Data8Password"];
+            var apikey = ConfigurationManager.AppSettings["Data8APIKey"];
+            if (!String.IsNullOrEmpty(apikey))
+            {
+                username = "apikey-" + apikey;
+                password = "";
+            }
 
             var country = DefaultCountry;
 
@@ -118,23 +114,62 @@ namespace Data8.MvcValidation
                 country = (string)property?.GetValue(validationContext.ObjectInstance, null) ?? country;
             }
 
-            var proxy = new InternationalTelephoneValidation();
-            var options = new[]
-            {
-                new Option { Name = "UseMobileValidation", Value = UseMobileValidation.ToString() },
-                new Option { Name = "UseLineValidation", Value = UseLandlineValidation.ToString() },
-                new Option { Name = "TreatUnavailableMobileAsInvalid", Value = TreatUnavailableMobileAsInvalid.ToString() },
+            var data = new {
+                username,
+                password,
+                telephoneNumber = str,
+                defaultCountry = country,
+                options = new {
+                    TreatUnavailableMobileAsInvalid = TreatUnavailableMobileAsInvalid.ToString(),
+                    ApplicationName = "MVC"
+                }
             };
 
-            var outcome = proxy.IsValid(username, password, str, country, options);
-
+            PhoneValidationResponse outcome = PerformValidation(JsonConvert.SerializeObject(data));
             if (outcome.Status.Success == false)
                 return ValidationResult.Success;
 
-            if (outcome.Result.ValidationResult != TelValidationWS.ValidationResult.Invalid)
+            if (outcome.Result.ValidationResult != "Invalid" && (outcome.Result.ValidationResult == "NoCoverage" && !TreatNoCoverageAsInvalid))
                 return ValidationResult.Success;
 
             return new ValidationResult(FormatErrorMessage(validationContext.DisplayName));
         }
+
+        private PhoneValidationResponse PerformValidation(string data) {
+            var url = "https://webservices.data-8.co.uk/PhoneValidation/IsValid.json";
+            using (var client = new HttpClient())
+            {
+                var response = client.PostAsync(url, new StringContent(data, System.Text.Encoding.UTF8, "application/json")).Result;
+                var phoneResult = JsonConvert.DeserializeObject<PhoneValidationResponse>(response.Content.ReadAsStringAsync().Result);
+                Console.WriteLine("Data8 Validation Result: " + phoneResult.Result.ValidationResult);
+                return phoneResult;
+            }
+        }
     }
+
+    public class PhoneValidationResponse
+    {
+        public PhoneResult Result { get; set; }
+        public Status Status { get; set; }
+    }
+
+    public class Status
+    {
+        public bool Success { get; set; }
+        public string ErrorMessage { get; set; }
+        public decimal CreditsRemaining { get; set; }
+    }
+
+    public class PhoneResult
+    {
+        public string TelephoneNumber { get; set; }
+        public string ValidationResult { get; set; }
+        public string ValidationLevel { get; set; }
+        public string NumberType { get; set; }
+        public string Location { get; set; }
+        public string Provider { get; set; }
+        public string CountryCode { get; set; }
+        public string CountryName { get; set; }
+    }
+
 }

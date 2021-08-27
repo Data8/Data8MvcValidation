@@ -3,8 +3,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Configuration;
 using System.Globalization;
 using System.Linq;
+using System.Net.Http;
 using System.Web.Mvc;
-using Data8.MvcValidation.TelFormattingWS;
+using Newtonsoft.Json;
 
 namespace Data8.MvcValidation
 {
@@ -77,15 +78,29 @@ namespace Data8.MvcValidation
                         case DataType.PhoneNumber:
                             {
                                 var country = (string)metadata.Properties.FirstOrDefault(p => p.DataTypeName == "Country")?.Model ?? DefaultCountry;
-                                var proxy = new TelephoneFormatting();
-                                var result = proxy.FormatTelephoneNumber(
-                                    ConfigurationManager.AppSettings["Data8Username"],
-                                    ConfigurationManager.AppSettings["Data8Password"],
-                                    str.Trim(),
-                                    new[]
+                                var username = ConfigurationManager.AppSettings["Data8Username"];
+                                var password = ConfigurationManager.AppSettings["Data8Password"];
+                                var apikey = ConfigurationManager.AppSettings["Data8APIKey"];
+                                if (!String.IsNullOrEmpty(apikey))
+                                {
+                                    username = "apikey-" + apikey;
+                                    password = "";
+                                }
+
+                                var data = new
+                                {
+                                    username,
+                                    password,
+                                    number = str.Trim(),
+                                    defaultCountry = country,
+                                    options = new
                                     {
-                                        new Option { Name = "DefaultCountryCode", Value = country }
-                                    });
+                                        DefaultCountryCode = country,
+                                        ApplicationName = "MVC"
+                                    }
+                                };
+
+                                TelephoneFormattingResponse result = PerformFormatting(JsonConvert.SerializeObject(data));
 
                                 if (result.Status.Success)
                                     formattedValue = result.FormattedNumber;
@@ -117,5 +132,22 @@ namespace Data8.MvcValidation
                 }
             }
         }
+
+        private TelephoneFormattingResponse PerformFormatting(string data)
+        {
+            var url = "https://webservices.data-8.co.uk/TelephoneFormatting/FormatTelephoneNumber.json";
+            using (var client = new HttpClient())
+            {
+                var response = client.PostAsync(url, new StringContent(data, System.Text.Encoding.UTF8, "application/json")).Result;
+                var phoneResult = JsonConvert.DeserializeObject<TelephoneFormattingResponse>(response.Content.ReadAsStringAsync().Result);
+                return phoneResult;
+            }
+        }
+    }
+
+    public class TelephoneFormattingResponse
+    {
+        public string FormattedNumber { get; set; }
+        public Status Status { get; set; }
     }
 }
