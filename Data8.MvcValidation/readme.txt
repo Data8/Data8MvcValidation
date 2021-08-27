@@ -9,14 +9,13 @@ Prerequisites
 
 This package makes use of the Data8 Validate suite of web services, and as such you must have a Data8 account with credits
 available for the relevant services. If you do not already have a Data8 account, register at
-https://www.data-8.co.uk/Membership/Register
+https://www.data-8.co.uk/register/
 
-Once you have registered you'll need to store your Data8 username and password in your web.config file in order for the
-validation attributes to authenticate the calls to the relevant web services. Use the keys Data8Username and Data8Password, e.g.
+Once you have registered you'll need to generate an API key at https://www.data-8.co.uk/dashboard/api-keys/. Store your API key
+in your web.config file in order for the validation attributes to authenticate the calls to the relevant web services.
 
 <appSettings>
-  <add key="Data8Username" value="your-username" />
-  <add key="Data8Password" value="your-password" />
+  <add key="Data8APIKey" value="your-api-key-here" />
 </appSettings>
 
 Usage - Email Address Validation
@@ -58,12 +57,6 @@ public class MyModel
 
 The standard ASP.NET validation pipeline will cause the entered telephone number to be validated, and the ModelState.IsValid
 property to be set to false in your controller action if an invalid telephone number is entered.
-
-Some types of telephone number can also be validated to a higher level, specifically mobile numbers and UK landline numbers.
-These optional services validate the number in real time against the telephone networks. If you have credits for the relevant
-web service you can enable these features in the attribute, e.g.
-
-[TelephoneValidation(UseMobileValidation = true, UseLandlineValidation = true)]
 
 In order to be validated correctly, a telephone number must have the context of a country it is within. If a telephone number is
 entered with a full international dialling code that is not a problem, but users will commonly enter their number without it. In
